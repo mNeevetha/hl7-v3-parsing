@@ -17,10 +17,21 @@
 
         function myFunction(xml) {
             var xmlDoc = xml.responseXML;
-            document.getElementById("demo").innerHTML =
+            document.getElementById("pat_first_name").innerHTML =
                 xmlDoc.getElementsByTagName("given")[0].childNodes[0].nodeValue;
-        }
 
+                document.getElementById("pat_last_name").innerHTML =
+                xmlDoc.getElementsByTagName("family")[0].childNodes[0].nodeValue;
+                
+                x = xmlDoc.getElementsByTagName("administrativeGenderCode")[0];
+                txt = x.getAttribute("code");
+                if(txt == 'M'){
+                document.getElementById("pat_gender").innerHTML = "Male";
+                }else{
+                document.getElementById("pat_gender").innerHTML ="Female";
+                }
+                //xmlDoc.getElementsByTagName("given")[0].childNodes[0].nodeValue;
+        }
     </script>
 </head>
 
@@ -30,11 +41,20 @@
         <table>
             <tr>
                 <td>
-                    <strong>Patient Name:</strong></td>
-                <td id="demo"></td>
+                    <strong>First Name:</strong></td>
+                <td id="pat_first_name"></td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Last Name:</strong></td>
+                <td id="pat_last_name"></td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Gender:</strong></td>
+                <td id="pat_gender"></td>
             </tr>
         </table>
-
     </div>
 </body>
 
