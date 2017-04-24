@@ -12,12 +12,13 @@
                 myFunction(this);
             }
         };
-        xhttp.open("GET", "http://localhost:3000/hl7-v3-sample.xml", true);
+       // xhttp.open("GET", "http://localhost:3000/hl7-v3-sample.xml", true);
         xhttp.open("GET", "http://localhost:3000/hl7-v3.xml", true);
         
         xhttp.send();
 
         function myFunction(xml) {
+            result="";
             var xmlDoc = xml.responseXML;
                 document.getElementById("pat_first_name").innerHTML =
                 xmlDoc.getElementsByTagName("given")[0].childNodes[0].nodeValue;
@@ -33,30 +34,82 @@
                 document.getElementById("pat_gender").innerHTML ="Female";
                 }
                 //xmlDoc.getElementsByTagName("given")[0].childNodes[0].nodeValue;
+                // for(var i= 0;i<10;i++){
+                //     console.log("Inside"+i);
+                // x = xmlDoc.getElementsByTagName("observationEvent")[i];
+                // txt = x.getAttribute("displayName");
+                // document.getElementById("Display").innerHTML = txt;
+                // }
+
+                x = xmlDoc.getElementsByTagName("observationEvent");
+                for (i = 0; i < x.length ;i++) {
+                 code=x[i].getElementsByTagName("code")[0];
+                 value =x[i].getElementsByTagName("value")[0];
+                  range=x[i].getElementsByTagName("value")[1];
+                 status=x[i].getElementsByTagName("interpretationCode")[0];
+                 displayName= code.getAttribute("displayName");
+                 unit= value.getAttribute("unit");
+                 res= value.getAttribute("value");
+                 console.log("Stattusssssss"+status[3])
+                 statusCode = "";
+                 //status.getAttribute("code");
+                  result +="<tr><th>"+displayName+"</th><td>"+range+"</td><td>"+unit+"</td><td>"+res+"</td><td>"+statusCode+"</td></tr>";
+                }
+                document.getElementById("tableContainer").innerHTML = result;
         }
     </script>
+
+
 </head>
 
 <body>
+    <h1 id="Display"></h1>
     <div id="container" style="margin-top: 23px;">
-        <h3>Patient Information</h3><br/>
-        <table>
-            <tr>
-                <td>
-                    <strong>First Name:</strong></td>
-                <td id="pat_first_name"></td>
-            </tr>
-            <tr>
-                <td>
-                    <strong>Last Name:</strong></td>
-                <td id="pat_last_name"></td>
-            </tr>
-            <tr>
-                <td>
-                    <strong>Gender:</strong></td>
-                <td id="pat_gender"></td>
-            </tr>
-        </table>
+        <div class="panel panel-info">
+            <div class="panel-heading">Patient Information</div>
+            <div class="panel-body">
+                <table>
+                    <tr>
+                        <td>
+                            <strong>First Name:</strong></td>
+                        <td id="pat_first_name"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Last Name:</strong></td>
+                        <td id="pat_last_name"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Gender:</strong></td>
+                        <td id="pat_gender"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="container" style="margin-top: 23px;">
+        <div class="panel panel-info">
+            <div class="panel-heading">Vital Signs Monitor</div>
+            <div class="panel-body">
+                <table class="table">
+                    
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Range</th>
+                            <th>Unit</th>
+                            <th>Result</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody id ="tableContainer">
+                        </tbody>
+                            
+                </table>
+            </div>
+        </div>
     </div>
 </body>
 
