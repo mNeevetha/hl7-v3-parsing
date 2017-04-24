@@ -13,11 +13,13 @@
             }
         };
         xhttp.open("GET", "http://localhost:3000/hl7-v3-sample.xml", true);
+        xhttp.open("GET", "http://localhost:3000/hl7-v3.xml", true);
+        
         xhttp.send();
 
         function myFunction(xml) {
             var xmlDoc = xml.responseXML;
-            document.getElementById("pat_first_name").innerHTML =
+                document.getElementById("pat_first_name").innerHTML =
                 xmlDoc.getElementsByTagName("given")[0].childNodes[0].nodeValue;
 
                 document.getElementById("pat_last_name").innerHTML =
